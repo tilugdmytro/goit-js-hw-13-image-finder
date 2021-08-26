@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Homework 12</title>
+    <title>Homework 13</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.0.0/modern-normalize.min.css"
@@ -16,17 +16,22 @@
       href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
       rel="stylesheet"
     />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="../node_modules/basiclightbox/dist/basicLightbox.min.css" />
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body class="body">
-    <!-- Так добавляются фрагменты в главные HTML-файлы страниц. -->
-    <!-- <include src="./partials/example.html"></include> -->
-    <div class="wrapper">
-      <input type="text" id="input" placeholder="Enter country name" />
-    </div>
-    <div class="country__list"></div>
+    <form class="search-form" id="search-form">
+      <input type="text" name="query" autocomplete="off" placeholder="Search images..." />
+    </form>
 
+    <ul class="gallery">
+      <!-- Список <li> с карточками изображений -->
+    </ul>
+
+    <button type="button" id="loadMore" class="is-hidden">Load more</button>
     <!-- Скрипт идёт последним в разметке. В нём уже подключен главный SASS-файл. -->
+
     <script src="./js/index.js"></script>
   </body>
 </html>

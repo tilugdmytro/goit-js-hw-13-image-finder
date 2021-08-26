@@ -6,74 +6,85 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
+    url(../images/background.jpeg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 
-.wrapper {
+.search-form {
   margin-top: 30px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: 'Amatic SC', cursive;
+  margin-bottom: 30px;
 }
 
-#input {
+input {
   font-family: 'Amatic SC', cursive;
-  min-width: 200px;
-  height: 30px;
+  height: 35px;
   border-width: 2px;
   font-size: 24px;
   padding: 5px;
 }
 
-.country__name {
-  font-size: 50px;
+#loadMore {
+  width: 150px;
+  display: block;
   text-align: center;
+  margin: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-color: gainsboro;
+  cursor: pointer;
 }
 
-.country__wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  padding: 20px;
+.is-hidden {
+  display: none;
+  opacity: 0;
+  pointer-events: none;
 }
 
-.country__names {
-  display: flex;
-  margin-top: 20px;
+.card-img {
+  height: 300px;
+  object-fit: cover;
+  max-width: 100%;
+  cursor: pointer;
 }
 
-.country__about {
-  width: 50%;
+.gallery {
+  padding: 0;
+  margin: 0;
   list-style: none;
+  max-width: calc(100% - 64px);
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-gap: 24px;
 }
 
-.country__about li {
-  margin-bottom: 20px;
-}
-
-.country__flag {
-  width: 40%;
-}
-
-.country__list {
-  width: 100%;
+.photo-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   height: 100%;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+  border-style: solid;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 16px;
+  flex-grow: 1;
+  font-size: 20px;
+  font-weight: 400;
+  color: black;
+}
+
+.stats-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
-    url(../images/Globe.jpeg);
-}
-
-.country__lang {
-  list-style: none;
-  padding: 0;
-}
-
-.country__item {
-  padding-left: 20px;
 }

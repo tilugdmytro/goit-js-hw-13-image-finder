@@ -1,53 +1,64 @@
-import countryCard from '../templates/country-card.hbs';
-import countryList from '../templates/country-list.hbs';
-import fetchCountries from './fetchCountries';
-import '@pnotify/core/dist/BrightTheme.css';
-import '@pnotify/core/dist/PNotify.css';
-import { error } from '@pnotify/core';
+import imageTemplate from '../templates/image.hbs';
+import fetchImages from './apiService';
 import debounce from 'lodash.debounce';
+import * as basicLightbox from 'basiclightbox';
 
 const refs = {
-  input: document.querySelector('#input'),
-  countryList: document.querySelector('.country__list'),
+  input: document.querySelector('#search-form'),
+  galleryList: document.querySelector('.gallery'),
+  loadMoreBtn: document.querySelector('#loadMore'),
 };
 
-refs.input.addEventListener('input', debounce(searchCountry, 500));
+let pageNumber = 1;
+let searchQuery = '';
 
-function searchCountry(e) {
+refs.input.addEventListener('input', debounce(searchImages, 500));
+refs.loadMoreBtn.addEventListener('click', onLoadMore);
+refs.galleryList.addEventListener('click', biggerImageView);
+
+function searchImages(e) {
   resetOutput();
-  const searchQuery = e.target.value.trim();
+  refs.loadMoreBtn.classList.add('is-hidden');
+  searchQuery = e.target.value.trim();
   if (searchQuery) {
-    makeCountryCard(searchQuery);
+    pageNumber = 1;
+    makeGallery(searchQuery, pageNumber);
   }
+}
 
-  function makeCountryCard(searchQuery) {
-    fetchCountries(searchQuery)
-      .then(data => {
-        if (data.length > 10) {
-          error({
-            text: 'Too many matches found. Please enter a more specific name!',
-          });
-        } else if (data.status === 404) {
-          error({
-            text: 'No country has been found. Please enter a more specific name!',
-          });
-        } else if (data.length === 1) {
-          renderCountryCard(data, countryCard);
-        } else if (data.length <= 10) {
-          renderCountryCard(data, countryList);
-        }
-      })
-      .catch(err => {
-        error({ text: 'Network error!', delay: 1500 });
-      });
-  }
+function onLoadMore() {
+  pageNumber += 1;
+  makeGallery(searchQuery, pageNumber);
+}
+
+function makeGallery(searchQuery, pageNumber) {
+  fetchImages(searchQuery, pageNumber)
+    .then(data => {
+      if (data.hits.length === 0) {
+        refs.loadMoreBtn.classList.add('is-hidden');
+      } else {
+        refs.loadMoreBtn.classList.remove('is-hidden');
+        refs.loadMoreBtn.scrollIntoView({
+          behavior: 'smooth',
+          block: 'end',
+        });
+        renderImageCard(data, imageTemplate);
+      }
+    })
+    .catch(error => {
+      console.log('Network error!', error);
+    });
 }
 
 function resetOutput() {
-  refs.countryList.innerHTML = '';
+  refs.galleryList.innerHTML = '';
 }
 
-function renderCountryCard(countries, template) {
-  const markup = countries.map(country => template(country)).join('');
-  refs.countryList.insertAdjacentHTML('afterbegin', markup);
+function biggerImageView(e) {
+  basicLightbox.create(`<img src="${e.target.dataset.source}">`).show();
+}
+
+function renderImageCard(data, template) {
+  const markup = data.hits.map(image => template(image)).join('');
+  refs.galleryList.insertAdjacentHTML('beforeend', markup);
 }
