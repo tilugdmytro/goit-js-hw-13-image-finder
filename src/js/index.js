@@ -37,12 +37,12 @@ function makeGallery(searchQuery, pageNumber) {
       if (data.hits.length === 0) {
         refs.loadMoreBtn.classList.add('is-hidden');
       } else {
+        renderImageCard(data, imageTemplate);
         refs.loadMoreBtn.classList.remove('is-hidden');
         refs.loadMoreBtn.scrollIntoView({
           behavior: 'smooth',
           block: 'end',
         });
-        renderImageCard(data, imageTemplate);
       }
     })
     .catch(error => {
